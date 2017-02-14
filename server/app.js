@@ -16,6 +16,7 @@ fs.readFile('./server/config.json', (readErr, data) => {
     user: config.db_user,
     password: config.db_pass,
     server: config.db_host, // You can use 'localhost\\instance' to connect to named instance
+	instanceName: 'MSSQLSERVER',
     database: config.db_name,
     dialect: 'mssql',
     dialectOptions: {
