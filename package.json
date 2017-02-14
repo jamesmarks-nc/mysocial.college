@@ -1,0 +1,25 @@
+{
+  "name": "mysocial.college",
+  "version": "1.0.0",
+  "description": "Proof of concept social network site built on MS SQL & Node",
+  "main": "server/app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jamesmarks-nc/mysocial.college.git"
+  },
+  "author": "James Marks",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jamesmarks-nc/mysocial.college/issues"
+  },
+  "homepage": "https://github.com/jamesmarks-nc/mysocial.college#readme",
+  "dependencies": {
+    "mssql": "3.3.0"
+  }
+}
