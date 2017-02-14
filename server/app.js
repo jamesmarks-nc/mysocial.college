@@ -7,7 +7,7 @@ const app = express();
 
 let config = {};
 
-fs.readFile('server/config.json', (readErr, data) => {
+fs.readFile('./server/config.json', (readErr, data) => {
   if (readErr) throw readErr;
 
   config = JSON.parse(data);
@@ -17,7 +17,7 @@ fs.readFile('server/config.json', (readErr, data) => {
     res.type('application/json');
     sql.connect(`mssql://${config.db_user}:${config.db_pass}@${config.db_host}/${config.db_name}`)
       .then(() => {
-        new sql.Request().query('select * from tests')
+        new sql.Request().query('select * from account')
           .then((recordset) => {
             res.json(recordset);
           }).catch((queryErr) => {
