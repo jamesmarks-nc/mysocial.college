@@ -27,6 +27,7 @@ fs.readFile('./server/config.json', (readErr, data) => {
           });
       })
       .catch((err) => {
+        res.json({ error: 'sql error', info: err });
         console.error(err);
       });
   });
