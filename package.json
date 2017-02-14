@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/jamesmarks-nc/mysocial.college#readme",
   "dependencies": {
+    "express": "4.14.1",
     "mssql": "3.3.0"
   }
 }

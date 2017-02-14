@@ -1,14 +1,38 @@
 // Load the http module to create an http server.
-const http = require('http');
+const express = require('express');
+const sql = require('mssql');
+const fs = require('fs');
 
-// Configure our HTTP server to respond with Hello World to all requests.
-const server = http.createServer((request, response) => {
-  response.writeHead(200, { 'Content-Type': 'text/plain' });
-  response.end('Hello World\n');
+const app = express();
+
+let config = {};
+
+fs.readFile('server/config.json', (readErr, data) => {
+  if (readErr) throw readErr;
+
+  config = JSON.parse(data);
+
+  // respond with "hello world" when a GET request is made to the homepage
+  app.get('/', (req, res) => {
+    res.type('application/json');
+    sql.connect(`mssql://${config.db_user}:${config.db_pass}@${config.db_host}/${config.db_name}`)
+      .then(() => {
+        new sql.Request().query('select * from tests')
+          .then((recordset) => {
+            res.json(recordset);
+          }).catch((queryErr) => {
+            // ... query error checks
+            console.error('Oh noes!', queryErr);
+            res.json({ error: 'error', info: queryErr });
+          });
+      });
+  });
+
+  app.listen(config.port, () => {
+    console.log(`Listening on ${config.port} baby!`);
+  });
+
+  // Put a friendly message on the terminal
+  console.log(`Server running at http://127.0.0.1:${config.port}/`);
 });
 
-// Listen on port 8000, IP defaults to 127.0.0.1
-server.listen(80);
-
-// Put a friendly message on the terminal
-console.log('Server running at http://127.0.0.1:80/');
