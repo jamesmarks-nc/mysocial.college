@@ -17,10 +17,25 @@ fs.readFile('./server/config.json', (readErr, data) => {
     password: config.db_pass,
     server: config.db_host, // You can use 'localhost\\instance' to connect to named instance
     database: config.db_name,
+    dialect: 'mssql',
+    dialectOptions: {
+      instanceName: 'S45-40-137-119',
+    },
     options: {
       truestedConnection: true,
       database: config.db_name,
       instancename: config.db_inst,
+    },
+  };
+  const otherSqlConfig = {
+    user: 'admin',
+    password: 'password',
+    server: 'ALBERT-PC',
+    database: 'database_name',
+    port: '61427',
+    dialect: 'mssql',
+    dialectOptions: {
+      instanceName: 'SQLEXPRESS',
     },
   };
 
