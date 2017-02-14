@@ -74,19 +74,21 @@ fs.readFile('./server/config.json', (readErr, data) => {
       .then(() => {
         new sql.Request().query(`select * from account where accId=${req.params.accId}`)
           .then((recordset) => {
-            console.dir(recordset);
+            if (recordset.length === 0) {
+              res.status(404);
+              res.json({ error: 'error', status: 404, info: 'Not found' });
+            }
             res.json(recordset[0]);
           }).catch((queryErr) => {
-            // ... query error checks
-            console.error('Oh noes!', queryErr);
-            res.json({ error: 'error', info: queryErr });
+            res.status(500);
+            res.json({ error: 'error', status: 500, info: queryErr });
           });
       })
       .catch((err) => {
-        res.json({ error: 'sql error', info: err });
-        console.error(err);
+        res.status(500);
+        res.json({ error: 'sql error', status: 500, info: err });
       });
-  })
+  });
 
   app.get('/posts', (req, res) => {
     res.type('application/json');
