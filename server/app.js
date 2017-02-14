@@ -19,7 +19,7 @@ fs.readFile('./server/config.json', (readErr, data) => {
     database: config.db_name,
     dialect: 'mssql',
     dialectOptions: {
-      instanceName: 'S45-40-137-119',
+      instanceName: 'MSSQLSERVER',
     },
     options: {
       truestedConnection: true,
