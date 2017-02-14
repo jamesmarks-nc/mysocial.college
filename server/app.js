@@ -16,27 +16,16 @@ fs.readFile('./server/config.json', (readErr, data) => {
     user: config.db_user,
     password: config.db_pass,
     server: config.db_host, // You can use 'localhost\\instance' to connect to named instance
-	instanceName: 'MSSQLSERVER',
+    instanceName: config.db_inst,
     database: config.db_name,
     dialect: 'mssql',
     dialectOptions: {
-      instanceName: 'MSSQLSERVER',
+      instanceName: config.db_inst,
     },
     options: {
       truestedConnection: true,
       database: config.db_name,
       instancename: config.db_inst,
-    },
-  };
-  const otherSqlConfig = {
-    user: 'admin',
-    password: 'password',
-    server: 'ALBERT-PC',
-    database: 'database_name',
-    port: '61427',
-    dialect: 'mssql',
-    dialectOptions: {
-      instanceName: 'SQLEXPRESS',
     },
   };
 
@@ -46,6 +35,44 @@ fs.readFile('./server/config.json', (readErr, data) => {
     sql.connect(sqlConfig)
       .then(() => {
         new sql.Request().query('select * from account')
+          .then((recordset) => {
+            res.json(recordset);
+          }).catch((queryErr) => {
+            // ... query error checks
+            console.error('Oh noes!', queryErr);
+            res.json({ error: 'error', info: queryErr });
+          });
+      })
+      .catch((err) => {
+        res.json({ error: 'sql error', info: err });
+        console.error(err);
+      });
+  });
+
+  app.get('/accounts', (req, res) => {
+    res.type('application/json');
+    sql.connect(sqlConfig)
+      .then(() => {
+        new sql.Request().query('select * from account')
+          .then((recordset) => {
+            res.json(recordset);
+          }).catch((queryErr) => {
+            // ... query error checks
+            console.error('Oh noes!', queryErr);
+            res.json({ error: 'error', info: queryErr });
+          });
+      })
+      .catch((err) => {
+        res.json({ error: 'sql error', info: err });
+        console.error(err);
+      });
+  });
+
+  app.get('/posts', (req, res) => {
+    res.type('application/json');
+    sql.connect(sqlConfig)
+      .then(() => {
+        new sql.Request().query('select * from post')
           .then((recordset) => {
             res.json(recordset);
           }).catch((queryErr) => {
