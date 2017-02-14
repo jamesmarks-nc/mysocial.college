@@ -12,10 +12,22 @@ fs.readFile('./server/config.json', (readErr, data) => {
 
   config = JSON.parse(data);
 
+  const sqlConfig = {
+    user: config.db_user,
+    password: config.db_pass,
+    server: config.db_host, // You can use 'localhost\\instance' to connect to named instance
+    database: config.db_name,
+    options: {
+      truestedConnection: true,
+      database: config.db_name,
+      instancename: config.db_inst,
+    },
+  };
+
   // respond with "hello world" when a GET request is made to the homepage
   app.get('/', (req, res) => {
     res.type('application/json');
-    sql.connect(`mssql://${config.db_user}:${config.db_pass}@${config.db_host}/${config.db_name}`)
+    sql.connect(sqlConfig)
       .then(() => {
         new sql.Request().query('select * from account')
           .then((recordset) => {
