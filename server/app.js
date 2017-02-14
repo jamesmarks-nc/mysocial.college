@@ -74,6 +74,7 @@ fs.readFile('./server/config.json', (readErr, data) => {
       .then(() => {
         new sql.Request().query(`select * from account where accId=${req.params.accId}`)
           .then((recordset) => {
+            console.dir(recordset);
             res.json(recordset[0]);
           }).catch((queryErr) => {
             // ... query error checks
