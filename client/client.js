@@ -5,7 +5,7 @@
 
 fetch('/accounts')
   .then((response) => {
-    response.json();
+    response.text();
   })
   .then((json) => {
     console.log(json);
