@@ -1,121 +1,48 @@
 // Load the http module to create an http server.
 const express = require('express');
 const sql = require('mssql');
-const fs = require('fs');
+const bodyParser = require('body-parser');
 
-const app = express();
+const configurator = require('./configurator');
+const accountRouter = require('./routers/accounts');
 
-let config = {};
+let configured;
 
-fs.readFile('./server/config.json', (readErr, data) => {
-  if (readErr) throw readErr;
+configurator()
+  .then((c) => {
+    configured = c;
 
-  config = JSON.parse(data);
+    const app = express();
+    app.use(express.static('client'));
+    app.use(bodyParser.json());
+    app.use(accountRouter);
 
-  const sqlConfig = {
-    user: config.db_user,
-    password: config.db_pass,
-    server: config.db_host, // You can use 'localhost\\instance' to connect to named instance
-    instanceName: config.db_inst,
-    database: config.db_name,
-    dialect: 'mssql',
-    dialectOptions: {
-      instanceName: config.db_inst,
-    },
-    options: {
-      truestedConnection: true,
-      database: config.db_name,
-      instancename: config.db_inst,
-    },
-  };
-
-  app.use(express.static('client'));
-
-  // // respond with "hello world" when a GET request is made to the homepage
-  // app.get('/', (req, res) => {
-  //   res.type('application/json');
-  //   sql.connect(sqlConfig)
-  //     .then(() => {
-  //       new sql.Request().query('select * from account')
-  //         .then((recordset) => {
-  //           res.json(recordset);
-  //         }).catch((queryErr) => {
-  //           // ... query error checks
-  //           console.error('Oh noes!', queryErr);
-  //           res.json({ error: 'error', info: queryErr });
-  //         });
-  //     })
-  //     .catch((err) => {
-  //       res.json({ error: 'sql error', info: err });
-  //       console.error(err);
-  //     });
-  // });
-
-  app.get('/accounts', (req, res) => {
-    res.type('application/json');
-    sql.connect(sqlConfig)
-      .then(() => {
-        new sql.Request().query('select * from account')
-          .then((recordset) => {
-            res.json(recordset);
-          }).catch((queryErr) => {
-            // ... query error checks
-            console.error('Oh noes!', queryErr);
-            res.json({ error: 'error', info: queryErr });
+    app.get('/posts', (req, res) => {
+      res.type('application/json');
+      sql.connect(c.sqlConfig)
+          .then(() => {
+            new sql.Request().query('select * from post')
+              .then((recordset) => {
+                res.json(recordset);
+              }).catch((queryErr) => {
+                // ... query error checks
+                console.error('Oh noes!', queryErr);
+                res.json({ error: 'error', info: queryErr });
+              });
+          })
+          .catch((err) => {
+            res.json({ error: 'sql error', info: err });
+            console.error(err);
           });
-      })
-      .catch((err) => {
-        res.json({ error: 'sql error', info: err });
-        console.error(err);
-      });
+    });
+
+    app.listen(c.appConfig.port, () => {
+      console.log(`Listening on ${c.appConfig.port}.`);
+    });
   });
 
-  app.get('/account/:accId', (req, res) => {
-    res.type('application/json');
-    sql.connect(sqlConfig)
-      .then(() => {
-        new sql.Request().query(`select * from account where accId=${req.params.accId}`)
-          .then((recordset) => {
-            if (recordset.length === 0) {
-              res.status(404);
-              res.json({ error: 'error', status: 404, info: 'Not found' });
-            }
-            res.json(recordset[0]);
-          }).catch((queryErr) => {
-            res.status(500);
-            res.json({ error: 'error', status: 500, info: queryErr });
-          });
-      })
-      .catch((err) => {
-        res.status(500);
-        res.json({ error: 'sql error', status: 500, info: err });
-      });
-  });
+// app.get('/account/:accId', (req, res) => {
 
-  app.get('/posts', (req, res) => {
-    res.type('application/json');
-    sql.connect(sqlConfig)
-      .then(() => {
-        new sql.Request().query('select * from post')
-          .then((recordset) => {
-            res.json(recordset);
-          }).catch((queryErr) => {
-            // ... query error checks
-            console.error('Oh noes!', queryErr);
-            res.json({ error: 'error', info: queryErr });
-          });
-      })
-      .catch((err) => {
-        res.json({ error: 'sql error', info: err });
-        console.error(err);
-      });
-  });
+// });
 
-  app.listen(config.port, () => {
-    console.log(`Listening on ${config.port} baby!`);
-  });
-
-  // Put a friendly message on the terminal
-  console.log(`Server running at http://127.0.0.1:${config.port}/`);
-});
 
