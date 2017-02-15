@@ -29,7 +29,7 @@ fs.readFile('./server/config.json', (readErr, data) => {
     },
   };
 
-  app.use(express.static('../client'));
+  app.use(express.static('client'));
 
   // respond with "hello world" when a GET request is made to the homepage
   app.get('/', (req, res) => {
