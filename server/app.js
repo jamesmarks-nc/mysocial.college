@@ -31,25 +31,25 @@ fs.readFile('./server/config.json', (readErr, data) => {
 
   app.use(express.static('client'));
 
-  // respond with "hello world" when a GET request is made to the homepage
-  app.get('/', (req, res) => {
-    res.type('application/json');
-    sql.connect(sqlConfig)
-      .then(() => {
-        new sql.Request().query('select * from account')
-          .then((recordset) => {
-            res.json(recordset);
-          }).catch((queryErr) => {
-            // ... query error checks
-            console.error('Oh noes!', queryErr);
-            res.json({ error: 'error', info: queryErr });
-          });
-      })
-      .catch((err) => {
-        res.json({ error: 'sql error', info: err });
-        console.error(err);
-      });
-  });
+  // // respond with "hello world" when a GET request is made to the homepage
+  // app.get('/', (req, res) => {
+  //   res.type('application/json');
+  //   sql.connect(sqlConfig)
+  //     .then(() => {
+  //       new sql.Request().query('select * from account')
+  //         .then((recordset) => {
+  //           res.json(recordset);
+  //         }).catch((queryErr) => {
+  //           // ... query error checks
+  //           console.error('Oh noes!', queryErr);
+  //           res.json({ error: 'error', info: queryErr });
+  //         });
+  //     })
+  //     .catch((err) => {
+  //       res.json({ error: 'sql error', info: err });
+  //       console.error(err);
+  //     });
+  // });
 
   app.get('/accounts', (req, res) => {
     res.type('application/json');
