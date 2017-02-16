@@ -30,12 +30,17 @@ this application.
 >it in the future, you may have to manually re-run the starter scripts on your SQL
 >instance, potentially destroying any data you may have accumulated in the meantime.
 
-## Configuration (config.json)
+## config.json
 
 To get things going, you'll need to add a **[config.json](config.json)** 
 file to this directory (/server) which consists of a JSON object 
 which has the following structure.
 
+**[config.json](config.json)** must be imported in app.js.
+It is not tracked, so you'll have to manually recreate it 
+for every installation of this application.
+
+### Example config.json file:
 ```JSON
 {
   "app": {
@@ -51,6 +56,15 @@ which has the following structure.
 }
 ```
 
-**[config.json](config.json)** must be imported in app.js.
-It is not tracked, so you'll have to manually recreate it 
-for every installation of this application.
+### Configuration properties:
+
+#### app
+ * **port** - the public port where you will serve your application. In production, you will usually want this to be port 80.
+
+#### sql
+ * **server** - The location (DNS or URL) of the SQL / vNext server which will server your database.
+ * **instanceName** - The installed SQL server instance you want to use.
+ * **database** - Database name for installed database. MySocial.College by convention, but this is up to you.
+ * **user** - Username for a user with full DML CRUD capabilities on the SQL server instance.
+ * **password** - SQL user's password.
+ 
