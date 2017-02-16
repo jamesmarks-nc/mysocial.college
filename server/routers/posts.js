@@ -1,13 +1,13 @@
 const sql = require('mssql');
 const express = require('express');
 
-const config = require('../config.json');
+// const config = require('../config.json');
 
 const postRouter = express.Router();
 
 postRouter.get('/posts', (req, res) => {
   res.type('application/json');
-  sql.connect(config.sql)
+  sql.connect(req.app.locals.config.sql)
     .then(() => {
       new sql.Request().query('select * from post')
         .then((recordset) => {
@@ -23,5 +23,10 @@ postRouter.get('/posts', (req, res) => {
       console.error(err);
     });
 });
+
+postRouter.route('/post/:postId')
+  .get(function(req, res) {
+    res.json(req.app.locals.config);
+  });
 
 module.exports = postRouter;

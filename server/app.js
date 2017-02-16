@@ -14,6 +14,7 @@ const postRouter = require('./routers/posts');
 
 // create and get a pointer to the express app.
 const app = express();
+app.locals.config = config;
 
 // parse incoming json data
 app.use(bodyParser.json());
