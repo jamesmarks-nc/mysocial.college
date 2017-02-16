@@ -2,7 +2,7 @@
 
 ## Philosophy
 
-The goal for this application is to display some useages of general data driven / 
+The goal for this application is to display some usages of general data driven / 
 database programming knowledge, especially for those who are just beginning their 
 journey.
 
