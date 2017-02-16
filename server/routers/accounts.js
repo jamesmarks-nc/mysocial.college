@@ -5,23 +5,6 @@ const config = require('../config.json');
 
 const accountRouter = express.Router();
 
-// dbConfig = {
-  // user: config.sql.user,
-  // password: config.sql.password,
-  // server: config.sql.server, // You can use 'localhost\\instance' to connect to named instance
-  // instanceName: config.sql.instanceName,
-  // database: config.sql.database,
-  // dialect: 'mssql',
-  // dialectOptions: {
-  //   instanceName: config.sql.db_inst,
-  // },
-  // options: {
-  //   truestedConnection: true,
-  //   database: config.sql.db_name,
-  //   instancename: config.sql.db_inst,
-  // },
-// }
-
 accountRouter.get('/accounts', (req, res) => {
   res.type('application/json');
   sql.connect(config.sql)
