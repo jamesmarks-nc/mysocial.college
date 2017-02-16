@@ -21,7 +21,6 @@ which has the following structure.
 }
 ```
 
-**[config.json](config.json)** must be imported in several
-scripts that are critical to the operation of the application.
+**[config.json](config.json)** must be imported in app.js.
 It is not tracked, so you'll have to manually recreate it 
 for every installation of this application.
