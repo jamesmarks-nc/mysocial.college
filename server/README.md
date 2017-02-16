@@ -8,11 +8,16 @@ which has the following structure.
 
 ```JSON
 {
-  "db_host": "localhost",
-  "db_inst": "SQLEXPRESS",
-  "db_name": "MySocial.College",
-  "db_user": "sa",
-  "db_pass": "root"
+  "app": {
+    "port": 3000
+  },
+  "sql": {
+    "server": "localhost",
+    "instanceName": "SQLEXPRESS",
+    "database": "MySocial.College",
+    "user": "sa",
+    "password": "root"
+  }
 }
 ```
 
