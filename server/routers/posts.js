@@ -25,7 +25,7 @@ postRouter.get('/posts', (req, res) => {
 });
 
 postRouter.route('/post/:postId')
-  .get(function(req, res) {
+  .get((req, res) => {
     res.json(req.app.locals.config);
   });
 
