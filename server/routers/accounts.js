@@ -31,15 +31,18 @@ accountRouter.route('/account')
         const { accFirstName, accLastName, accEmail, accPassword,
                 accSchool, accYear, accStudy, accBudget } = req.body;
 
-        new sql.Request().query(`INSERT INTO account (accFirstName, accLastName, accEmail, accPassword, accSchool, accYear, accStudy, accBudget)
-                                  VALUES ('${accFirstName}', '${accLastName}', '${accEmail}', '${accPassword}', '${accSchool}', ${accYear}, '${accStudy}', ${accBudget})`)
-          .then((err, recordset) => {
+        var query = `INSERT INTO account (accFirstName, accLastName, accEmail, accPassword, accSchool, accYear, accStudy, accBudget)
+                      VALUES ('${accFirstName}', '${accLastName}', '${accEmail}', '${accPassword}', '${accSchool}', ${accYear}, '${accStudy}', ${accBudget})`
+        console.log(query);
+        new sql.Request().query(query)
+          .then((err, recordset, affected) => {
             if (err) {
               res.status(500);
               res.json({ error: 'error', status: 500, info: err });
             } else {
               res.status(200);
-              res.json({ success: 'success', status: 200 });
+              console.log(recordset, affected);
+              res.json({ success: 'success', status: 200, recordset, affected });
             }
           }).catch((queryErr) => {
             res.status(500);

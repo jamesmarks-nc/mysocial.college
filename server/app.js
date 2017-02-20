@@ -3,7 +3,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 
 // Load up routers.
-import { accountRouter, loginRouter, postRouter } from './routers';
+import * as routers from './routers';
 
 // create and get a pointer to the express app.
 const app = express();
@@ -16,9 +16,9 @@ app.locals.config = config;
 app.use(bodyParser.json());
 
 // then run everything through the various routers.
-app.use('/login', loginRouter);
-app.use(accountRouter);
-app.use(postRouter);
+app.use('/login', routers.loginRouter);
+app.use(routers.accountRouter);
+app.use(routers.postRouter);
 
 // serve static files
 app.use(express.static('client'));

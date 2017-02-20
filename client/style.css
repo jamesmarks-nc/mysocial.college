@@ -1,0 +1,49 @@
+#flexy {
+  display: flex;
+  flex-direction: row;
+}
+#accounts, #posts {
+  margin: 10px;
+  padding: 3px;
+}
+#accounts {
+  flex: 1
+}
+#posts {
+  flex: 4
+}
+
+.account-card {
+  border: 1px dotted blue;
+}
+.account-heading {
+  border: 1px dashed orangered;
+}
+.account-posts-link {
+  border: 1px dashed green;
+}
+
+.post-card {
+  border: 1px dotted blue;
+  margin: 5px;
+  padding: 3px;
+}
+.post-text {
+  border: 1px dashed orangered;
+  padding: 3px;
+}
+.post-thumbsup::before {
+  content: '👍 '
+}
+.post-thumbsup {
+  border: 1px dotted cadetblue;
+}
+.post-thumbsdown::before {
+  content: '👎 '
+}
+.post-thumbsdown {
+  border: 1px dotted cornflowerblue;
+}
+.post-date {
+  border: 1px dashed green;
+}
