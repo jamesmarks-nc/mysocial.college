@@ -1,2 +1,5 @@
+.vscode/
 node_modules/
 server/config.json
+server/build/
+**/.DS_Store

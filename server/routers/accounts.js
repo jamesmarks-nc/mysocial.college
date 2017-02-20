@@ -1,7 +1,7 @@
-const sql = require('mssql');
-const express = require('express');
+import sql from 'mssql';
+import express from 'express';
 
-const config = require('../config.json');
+import config from '../config.json';
 
 const accountRouter = express.Router();
 
@@ -84,4 +84,5 @@ accountRouter.route('/account/:accId')
     res.send('DELETE request for a single account.');
   });
 
-module.exports = accountRouter;
+//module.exports = accountRouter;
+export { accountRouter };

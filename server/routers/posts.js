@@ -1,9 +1,9 @@
-const sql = require('mssql');
-const express = require('express');
+import sql from 'mssql';
+import express from 'express';
 
 // const config = require('../config.json');
 
-const postRouter = express.Router();
+export const postRouter = express.Router();
 
 postRouter.get('/posts', (req, res) => {
   res.type('application/json');
@@ -28,5 +28,3 @@ postRouter.route('/post/:postId')
   .get((req, res) => {
     res.json(req.app.locals.config);
   });
-
-module.exports = postRouter;

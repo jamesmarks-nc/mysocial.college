@@ -1,19 +1,15 @@
 // Load the express module to manage our http server.
-const express = require('express');
-const bodyParser = require('body-parser');
-
-// Turns out that in recent versions of Node, you can
-// simply require JSON files directly into your code.
-// Thank god. The configurator format was UUUUUUUUgly!
-const config = require('./config.json');
+import express from 'express';
+import bodyParser from 'body-parser';
 
 // Load up routers.
-const loginRouter = require('./routers/login');
-const accountRouter = require('./routers/accounts');
-const postRouter = require('./routers/posts');
+import { accountRouter, loginRouter, postRouter } from './routers';
 
 // create and get a pointer to the express app.
 const app = express();
+
+// Load in configuration
+import config from './config.json';
 app.locals.config = config;
 
 // parse incoming json data

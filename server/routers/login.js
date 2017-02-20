@@ -1,8 +1,8 @@
-const sql = require('mssql');
-const express = require('express');
-const path = require('path');
+import sql from 'mssql';
+import express from 'express';
+import path from 'path';
 
-const config = require('../config.json');
+import config from '../config.json';
 
 const loginRouter = express.Router();
 
@@ -14,4 +14,4 @@ loginRouter
     // res.sendFile(path.resolve(__dirname, '../../client/login.html'));
   });
 
-module.exports = loginRouter;
+export { loginRouter };
