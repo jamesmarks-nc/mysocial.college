@@ -2,14 +2,15 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
+// Import configuration
+import config from './config.json';
 // Load up routers.
 import * as routers from './routers';
 
 // create and get a pointer to the express app.
 const app = express();
 
-// Load in configuration
-import config from './config.json';
+// Mount configuration to app (for routes)
 app.locals.config = config;
 
 // parse incoming json data
