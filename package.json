@@ -4,8 +4,8 @@
   "description": "Proof of concept social network site built on MS SQL & Node",
   "main": "server/app.js",
   "scripts": {
-    "start": "node server/build/app",
-    "startmon": "nodemon server/build/app",
+    "start": "node --inspect server/build/app",
+    "startmon": "nodemon --inspect server/build/app",
     "webpack-server": "webpack -w --config server/webpack.config.js"
   },
   "repository": {
