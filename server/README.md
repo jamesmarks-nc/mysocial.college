@@ -2,7 +2,7 @@
 
 ## Philosophy
 
-The goal for this application is to display some usages of general data driven / 
+The goal for this application is to demonstrate some practical usages of general data driven / 
 database programming knowledge, especially for those who are just beginning their 
 journey.
 
@@ -22,7 +22,7 @@ Javascript + MS-TSQL to manage programming of a full stack web application, you 
 need a SQL Server or SQL vNext instance running on the machine which provides 
 this application.
 
->**Note:** This is a gradually evolving application and so a database starter/installation 
+>**Note:** This is a gradually evolving application. A database starter/installation 
 >will be provided. 
 >
 >However, it should be understood that during this period of time said 
@@ -37,7 +37,7 @@ file to this directory (/server) which consists of a JSON object
 which has the following structure.
 
 **[config.json](config.json)** must be imported in app.js.
-It is not tracked, so you'll have to manually recreate it 
+It is not tracked by git, so you'll have to manually recreate it 
 for every installation of this application.
 
 ### Example config.json file:
