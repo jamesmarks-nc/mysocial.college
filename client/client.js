@@ -21,6 +21,10 @@ function getPosts(accId) {
   return fetch('/posts/' + accId)
     .then(response => response.json());
 }
+// function getComments(postId) {
+//   return fetch('/comments/' + postId)
+//     .then(response => response.json());
+// }
 
 (function() {
 
@@ -29,6 +33,7 @@ function getPosts(accId) {
 
   var $postsContainer = document.getElementById("posts");
   var $postCardTemplate = document.getElementById("post-card");
+  var $commentCardTemplate = document.getElementById("comment-card");
 
   var accounts = [];
   var posts = [];
@@ -47,10 +52,7 @@ function getPosts(accId) {
         link.addEventListener('click', loadPostsFor);
         
         $accountsContainer.appendChild(accountCard);
-
       }
-
-      
     })
     .catch((err) => {
       console.error(err);
@@ -62,20 +64,30 @@ function getPosts(accId) {
           posts = json;
           console.log(posts);
           $postsContainer.innerHTML = null;
-          for(var index in posts) {
-            var post = posts[index];
+          for(let index in posts) {
+            let post = posts[index];
 
-            var postCard = document.importNode($postCardTemplate.content, true);
+            let postCard = document.importNode($postCardTemplate.content, true);
             // INFO: const { postId, postTag, postURL, accId } = post;
             postCard.querySelector(".post-text").innerText = post.postBody;
             postCard.querySelector(".post-thumbsup").innerText = post.postThumbsUp;
             postCard.querySelector(".post-thumbsdown").innerText = post.postThumbsDown;
             postCard.querySelector(".post-date").innerText = new Date(post.postDate).toDateString();
-
             
+            // getComments(post.postId)
+            //   .then(json => {
+            //     post.comments = json;
+            //     for(let i in comments) {
+            //       let commentCard = document.importNode($commentCardTemplate, true);
+            //       commentCard.querySelector(".comment-text").innerText = comment.commentBody;
+            //       commentCard.querySelector(".comment-user").innerText = comment.commentUser;
+            //       commentCard.querySelector(".comment-timestamp").innerText = comment.commentTimestamp;
+            //       postCard.querySelector(".post-comments").appendChild(commentCard);
+            //     }
+            //   })
+
             $postsContainer.appendChild(postCard);
           }
-
         })
         .catch(err => console.error(err));
   }
