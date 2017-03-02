@@ -33,6 +33,25 @@ accountRouter.get('/accounts', (req, res) => {
     });
 });
 
+accountRouter.get('/friends', (req, res) => {
+  res.type('application/json');
+  sql.connect(config.sql)
+    .then(() => {
+      new sql.Request().query(
+          `select accId, accFirstName, accLastName from ACCOUNT 
+           where accId in (select friendId from FRIEND where accId=${req.app.locals.accId}) 
+              OR accId in (select accId from FRIEND where friendId=${req.app.locals.accId})`)
+        .then((recordset) => {
+          res.json(recordset);
+        }).catch((queryErr) => {
+          res.json({ error: 'error', info: queryErr });
+        });
+    })
+    .catch((err) => {
+      res.json({ error: 'sql error', info: err });
+    });
+});
+
 accountRouter.route('/account')
   .post(function(req, res) {
     const connection = new sql.Connection(config.sql);
@@ -142,6 +161,7 @@ accountRouter.route('/account/:accId')
         ps.prepare(query).then(function(statement, err) {
 
           const psParams = Object.assign( {}, req.body );
+          psParams.accId = req.params.accId;
           ps.execute(psParams, function(err, recordset, affected) {
             if(err) {
               res.status(500);

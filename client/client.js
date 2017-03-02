@@ -26,6 +26,10 @@ function getPosts(accId) {
 //     .then(response => response.json());
 // }
 
+function doLogin(username, password) {
+  return fetch('/login', { method: 'POST', body: JSON.stringify({ username, password })});
+}
+
 (function() {
 
   var $accountsContainer = document.getElementById("accounts");
