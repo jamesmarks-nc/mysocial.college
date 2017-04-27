@@ -5,7 +5,7 @@ import uuid from 'uuid';
 
 import config from '../config.json';
 
-const TOKEN_EXPIRY_TIME = 3600000; // 1 hour
+const TOKEN_EXPIRY_TIME = 3600000; // 1 hour = 60 * 60 * 1000
 
 const secret = uuid.v4();
 

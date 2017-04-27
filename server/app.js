@@ -87,7 +87,7 @@ app.use(routers.postRouter);
 app.use(express.static('client'));
 
 // and finally, listen on the configured port.
-app.listen(config.app.port, () => {
+app.listen(config.port, () => {
   console.log(chalk.bold.bgBlue("API Server Started."));
-  console.log(`Listening on ${chalk.bold.green(config.app.port)}.`);
+  console.log(`Listening on ${chalk.bold.green(config.port)}.`);
 });

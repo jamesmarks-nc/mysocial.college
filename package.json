@@ -8,10 +8,7 @@
     "startmon": "nodemon --inspect server/build/app",
     "webpack-server": "webpack -w --config server/webpack.config.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jamesmarks-nc/mysocial.college.git"
-  },
+  "repository": "git+https://github.com/jamesmarks-nc/mysocial.college.git",
   "author": "James Marks",
   "license": "MIT",
   "bugs": {
