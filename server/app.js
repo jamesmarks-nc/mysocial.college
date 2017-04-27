@@ -1,5 +1,6 @@
 // Load the express module to manage our http server.
 import express from 'express';
+import path from 'path';
 // Load bodyparser to parse our JSON request data
 import bodyParser from 'body-parser';
 import jwt from 'jsonwebtoken'; // https://www.npmjs.com/package/jsonwebtoken
@@ -17,7 +18,7 @@ const tokens = {};
 
 // TODO: Periodically find and remove expired JWTs
 const removeExpiredJWTs = function() {
-
+  console.log("TODO: Remove expired JWTs");
 }
 const JWT_EXPIRY_CHECK_TIMEOUT = (60 * 60 * 1000); // Every hour: minutes * seconds * milliseconds
 setTimeout(removeExpiredJWTs, JWT_EXPIRY_CHECK_TIMEOUT);
@@ -29,6 +30,12 @@ const app = express();
 app.locals.config = config;
 app.locals.tokens = tokens;
 app.locals.accId = null;
+
+// Serve "static"" user interface files.
+app.use(express.static('./client')); 
+// !!!Important!!!: This can only work if node is launched from the top-level project directory, 
+// do not launch app.js with node from the same directory where app.js resides (this directory) 
+// or static files may not be correctly served to clients.
 
 // parse incoming json data
 app.use(bodyParser.json());
@@ -74,7 +81,8 @@ app.use(function(req,res,next) {
       }
     */
     res.status(401);
-    res.json(err);
+    res.send("error getting jwt.");
+    //res.json(err);
     return;
   }
 });
