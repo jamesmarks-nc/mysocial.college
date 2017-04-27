@@ -32,10 +32,7 @@ app.locals.tokens = tokens;
 app.locals.accId = null;
 
 // Serve "static"" user interface files.
-app.use(express.static('./client')); 
-// !!!Important!!!: This can only work if node is launched from the top-level project directory, 
-// do not launch app.js with node from the same directory where app.js resides (this directory) 
-// or static files may not be correctly served to clients.
+app.use(express.static('client')); 
 
 // parse incoming json data
 app.use(bodyParser.json());
@@ -81,8 +78,7 @@ app.use(function(req,res,next) {
       }
     */
     res.status(401);
-    res.send("error getting jwt.");
-    //res.json(err);
+    res.json(err);
     return;
   }
 });
