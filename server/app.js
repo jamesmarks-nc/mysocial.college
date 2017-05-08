@@ -7,6 +7,13 @@ import jwt from 'jsonwebtoken'; // https://www.npmjs.com/package/jsonwebtoken
 
 import chalk from 'chalk';
 
+import https from 'https';
+import pem from 'pem';
+
+pem.config({
+    pathOpenSSL: config.OPENSSL_PATH //TODO: make this a config variable.
+});
+
 // Import configuration
 import config from './config.json';
 // Load up routers.
@@ -90,8 +97,28 @@ app.use(routers.postRouter);
 // serve static files
 app.use(express.static('client'));
 
-// and finally, listen on the configured port.
-app.listen(config.port, () => {
-  console.log(chalk.bold.bgBlue("API Server Started."));
-  console.log(`Listening on ${chalk.bold.green(config.port)}.`);
+
+pem.createCSR({organization:'PPS-T1'}, function(err,csr){
+    if(err){
+        console.log("Error creating CSR: ", err);
+        return;
+    }  
+
+    pem.createCertificate({days:1, selfSigned:true}, function(err, keys){
+        if(err){
+            console.log("Error creating Certificate: ", err);
+            return;
+        }
+
+        var server = https.createServer({key: keys.serviceKey, cert: keys.certificate}, app);
+        // and finally, listen on the configured port.
+        server.listen(config.securePort, () => {
+          console.log(chalk.bold.bgBlue("Secure API Server Started."));
+          console.log(`Listening securely on ${chalk.bold.green(config.securePort)}.`);
+        });
+        app.listen(config.port, () => {
+          console.log(chalk.bold.bgBlue("Unsecure API Server Started."));
+          console.log(`Listening on ${chalk.bold.green(config.port)}.`);
+        });
+    });
 });

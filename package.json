@@ -22,6 +22,7 @@
     "jsonwebtoken": "^7.3.0",
     "moment": "^2.17.1",
     "mssql": "3.3.0",
+    "pem": "^1.9.7",
     "uuid": "^3.0.1"
   },
   "devDependencies": {
