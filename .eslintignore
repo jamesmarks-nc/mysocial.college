@@ -1,0 +1,8 @@
+.vscode/
+node_modules/
+server/config.json
+server/build/
+**/.DS_Store
+npm-debug.log
+**/npm-debug.log.*
+npm-debug.log.*
